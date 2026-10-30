@@ -26,7 +26,7 @@ python run.py
 #    dashboard/index.html   (one screen: 4 buckets, ₹ saved, ₹ lost, net ₹)
 
 # 4. Score a single new order
-python run.py --order '{"order_id":"NEW1","customer_name":"Ravi Kumar","phone":"9876543210","address":"chowk se left","state":"Bihar","customer_prior_orders":0,"customer_prior_rto":1,"utm_source":"meta_ads"}'
+python run.py --order '{"`"order_id`":`"NEW1`",`"customer_name`":`"Ravi Kumar`",`"phone`":`"9876543210`",`"address`":`"chowk se left`",`"state`":`"Bihar`",`"customer_prior_orders`":0,`"customer_prior_rto`":1,`"utm_source`":`"meta_ads`"}'
 
 # 5. Try the WhatsApp confirmation / prepaid simulator
 python -m whatsapp.flow

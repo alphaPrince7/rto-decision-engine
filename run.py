@@ -33,7 +33,8 @@ def main():
     ap.add_argument("--demo", action="store_true")
     a = ap.parse_args()
     if a.order:
-        d = decide(json.loads(a.order))
+        import ast
+        d = decide(ast.literal_eval(a.order) if "'" in a.order and '"' not in a.order else json.loads(a.order))
         print(json.dumps({"action": d.action, "risk_score": d.risk_score,
                           "reason": d.reason, "est_rto_prob": d.est_rto_prob}, indent=2))
     elif a.demo:
