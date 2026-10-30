@@ -1,0 +1,19 @@
+{
+  "global_rto": 0.284,
+  "state_risk": {
+    "Assam": 0.349,
+    "Bihar": 0.534,
+    "Delhi": 0.215,
+    "Karnataka": 0.257,
+    "Madhya Pradesh": 0.385,
+    "Maharashtra": 0.179,
+    "Rajasthan": 0.291,
+    "Tamil Nadu": 0.21,
+    "Telangana": 0.249,
+    "Uttar Pradesh": 0.447,
+    "West Bengal": 0.244
+  },
+  "pincode_risk": {
+    "411047": 0.25
+  }
+}

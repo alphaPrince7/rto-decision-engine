@@ -1,0 +1,22 @@
+{
+  "buckets": {
+    "ship_as_is": 1043,
+    "ship_after_confirmation": 739,
+    "nudge_to_prepaid": 231,
+    "hold_cancel": 4
+  },
+  "bucket_rto": {
+    "ship_as_is": 0.173,
+    "ship_after_confirmation": 0.345,
+    "nudge_to_prepaid": 0.58,
+    "hold_cancel": 1.0
+  },
+  "saved_hold": 678,
+  "lost_hold": 0,
+  "saved_confirm": 21598,
+  "saved_nudge": 6915,
+  "net_sample": 29191,
+  "net_monthly": 43417,
+  "total_orders": 2017,
+  "baseline_rto": 0.284
+}

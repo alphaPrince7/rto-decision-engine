@@ -1,0 +1,61 @@
+# ============================================================
+#  RTO Decision Engine — Business Rules
+#  Edit these numbers to change behaviour. NO CODE CHANGES NEEDED.
+#  A non-technical person (ops/founder) can safely edit this file.
+# ============================================================
+
+# ---- Economics (from the business brief) ----
+economics:
+  cost_per_rto: 169.4        # 65 forward + 65 return + 25 packaging + 8% damage*180
+  profit_per_delivered: 402  # AOV 649 * 62% margin
+  prepaid_rto_rate: 0.04     # prepaid orders almost never RTO
+
+# ---- Risk score thresholds (0 to 100) ----
+# The engine scores every order 0-100. Higher = riskier.
+# These bands decide the action. Raise a number = be more lenient.
+thresholds:
+  ship_as_is_below: 20        # score < 20  -> Ship as-is (actual RTO here ~17%)
+  confirm_below: 45           # 20-45       -> Ship after WhatsApp confirmation
+  nudge_prepaid_below: 85     # 45-85       -> Nudge to prepaid (discount)
+  # score >= 85                              -> Hold / cancel (actual RTO ~100%)
+  # NOTE: these bands were calibrated against the real data so that the
+  # hold bucket is almost entirely orders that truly RTO. Cancelling earlier
+  # LOSES money, because even a 60%-RTO order still has positive expected value
+  # once you account for the 402 profit on the ones that do deliver.
+
+# ---- How much each risk factor adds to the score ----
+# Think of these as "penalty points". Tune to taste.
+risk_weights:
+  prior_rto_1: 20             # customer returned 1 past order
+  prior_rto_2plus: 45         # customer returned 2+ past orders (very strong signal)
+  new_customer: 8             # no prior orders (first-time buyer)
+  high_risk_state: 18         # order is in a high-RTO state (see list below)
+  medium_risk_state: 8
+  address_no_house_number: 22 # address has no house/flat number (LLM-judged)
+  address_incomplete: 25      # LLM says address is vague/unreal
+  fake_name: 30               # LLM/rules flag name as fake (asdf, test, etc.)
+  invalid_phone: 15           # phone not a valid 10-digit Indian mobile
+
+# ---- Geography (data-driven; editable) ----
+# States with RTO clearly above average. Ops can add/remove.
+high_risk_states:   [Bihar, Uttar Pradesh, Madhya Pradesh, Assam]
+medium_risk_states: [Rajasthan, Karnataka, Telangana]
+
+# ---- Prepaid nudge ----
+prepaid:
+  discount_rupees: 40         # discount offered to switch COD -> prepaid
+  # Justified because converting one risky COD order to prepaid saves ~137 in
+  # expected RTO loss; a 40 discount is comfortably inside that.
+
+# ---- WhatsApp confirmation ----
+whatsapp:
+  reply_window_hours: 24      # wait this long for a reply before timing out
+  default_language: hinglish  # hinglish | english | hindi
+
+# ---- Safety guardrail (protects Marketing's concern) ----
+# Never auto-cancel a first order from a customer acquired via paid ads
+# unless the risk score is extreme. Protects the 300-rupee CAC.
+guardrails:
+  protect_paid_first_order: true
+  protect_paid_sources: [meta_ads, google_ads, influencer]
+  extreme_score_override: 85  # only cancel a protected order above this score
