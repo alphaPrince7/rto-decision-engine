@@ -8,7 +8,7 @@ For each order it outputs one of four actions, each with a **plain-English reaso
 
 > **TL;DR of the findings:** cancelling "risky" orders *loses* money — a delivered order (+₹402)
 > far outweighs a return (−₹169), so the break-even is ~70% RTO. The real wins are **WhatsApp
-> confirmation** and **nudging to prepaid**. On the 2,017-order sample this nets **+₹29k (~₹43k/month)**.
+> confirmation** and **nudging to prepaid**. On the 2,017-order, ~6-month sample this nets **+₹29k over the sample (≈ ₹4.9k/month, or ≈ ₹14.5k per 1,000 orders)**.
 > See `docs/Business_Memo.pdf`.
 
 ---
@@ -26,7 +26,7 @@ python run.py
 #    dashboard/index.html   (one screen: 4 buckets, ₹ saved, ₹ lost, net ₹)
 
 # 4. Score a single new order
-python run.py --order '{"`"order_id`":`"NEW1`",`"customer_name`":`"Ravi Kumar`",`"phone`":`"9876543210`",`"address`":`"chowk se left`",`"state`":`"Bihar`",`"customer_prior_orders`":0,`"customer_prior_rto`":1,`"utm_source`":`"meta_ads`"}'
+python run.py --order '{"order_id":"NEW1","customer_name":"Ravi Kumar","phone":"9876543210","address":"chowk se left","state":"Bihar","customer_prior_orders":0,"customer_prior_rto":1,"utm_source":"meta_ads"}'
 
 # 5. Try the WhatsApp confirmation / prepaid simulator
 python -m whatsapp.flow

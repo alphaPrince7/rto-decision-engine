@@ -24,7 +24,7 @@
  @media(max-width:720px){.cards,.money{grid-template-columns:1fr 1fr;}}
 </style></head><body><div class="wrap">
  <h1>Kesh Haircare — COD Risk Control</h1>
- <div class="sub">Yesterday's COD orders, after the decision engine ran · 30 Oct 2026</div>
+ <div class="sub">Yesterday's COD orders, after the decision engine ran · 07 Nov 2026</div>
 
  <div class="cards">
     <div class="card" style="border-top:4px solid #1B998B">
@@ -57,20 +57,20 @@
      <div class="m-val green">₹29,191</div></div>
    <div class="m"><div class="m-label">Est. ₹ lost from cancelling genuine orders</div>
      <div class="m-val red">₹0</div></div>
-   <div class="m"><div class="m-label">Orders processed</div>
+   <div class="m"><div class="m-label">Orders processed (≈5.98-month sample)</div>
      <div class="m-val navy">2,017</div></div>
  </div>
 
  <div class="net">
-   <div><div style="font-size:13px;opacity:.85;">Net ₹ impact vs shipping everything blindly</div>
+   <div><div style="font-size:13px;opacity:.85;">Net ₹ impact vs shipping everything blindly<br>(over the 5.98-month sample)</div>
      <div class="big">+ ₹29,191</div></div>
    <div style="text-align:right;font-size:13px;opacity:.9;">
-     ≈ ₹43,417 / month at 3,000 COD orders<br>
+     ≈ ₹4,882 / month &nbsp;·&nbsp; ≈ ₹14,472 per 1,000 orders<br>
      Baseline RTO was 28% — now triaged before shipping</div>
  </div>
 
  <div class="foot">
-   Numbers are a backtest on 2,017 real past COD orders using the current
+   Numbers are a backtest on 2,017 real past COD orders (≈5.98 months) using the current
    rules in <code>config/rules.yaml</code>. "Saved" counts RTOs prevented by holding, WhatsApp
    confirmation, and prepaid conversion; "lost" counts genuine orders that holding cancels.
    Assumptions (confirmation prevents 50% of would-be RTOs; 50% accept prepaid) are stated in the memo.

@@ -4,9 +4,13 @@ import json, os, datetime
 ROOT = os.path.dirname(os.path.dirname(__file__))
 s = json.load(open(os.path.join(ROOT, "data", "impact_summary.json")))
 b, rto = s["buckets"], s["bucket_rto"]
-saved = s["saved_hold"] + s["saved_confirm"] + s["saved_nudge"]
-lost = s["lost_hold"]
-net = s["net_sample"]
+comp = s["components_over_sample"]
+tb = s["time_basis"]
+saved = comp["saved_hold"] + comp["saved_confirm"] + comp["saved_nudge"]
+lost = comp["lost_hold"]
+net = s["net_over_sample"]
+months = tb["months_in_sample"]
+total_orders = tb["sample_orders"]
 
 cards = [
     ("Ship as-is", b["ship_as_is"], rto["ship_as_is"], "#1B998B", "Low risk — goes out normally"),
@@ -59,20 +63,20 @@ html = f"""<!doctype html><html><head><meta charset="utf-8">
      <div class="m-val green">₹{saved:,}</div></div>
    <div class="m"><div class="m-label">Est. ₹ lost from cancelling genuine orders</div>
      <div class="m-val red">₹{lost:,}</div></div>
-   <div class="m"><div class="m-label">Orders processed</div>
-     <div class="m-val navy">{s['total_orders']:,}</div></div>
+   <div class="m"><div class="m-label">Orders processed (≈{months}-month sample)</div>
+     <div class="m-val navy">{total_orders:,}</div></div>
  </div>
 
  <div class="net">
-   <div><div style="font-size:13px;opacity:.85;">Net ₹ impact vs shipping everything blindly</div>
+   <div><div style="font-size:13px;opacity:.85;">Net ₹ impact vs shipping everything blindly<br>(over the {months}-month sample)</div>
      <div class="big">+ ₹{net:,}</div></div>
    <div style="text-align:right;font-size:13px;opacity:.9;">
-     ≈ ₹{s['net_monthly']:,} / month at 3,000 COD orders<br>
+     ≈ ₹{s['net_per_month']:,} / month &nbsp;·&nbsp; ≈ ₹{s['net_per_1000_orders']:,} per 1,000 orders<br>
      Baseline RTO was {s['baseline_rto']*100:.0f}% — now triaged before shipping</div>
  </div>
 
  <div class="foot">
-   Numbers are a backtest on {s['total_orders']:,} real past COD orders using the current
+   Numbers are a backtest on {total_orders:,} real past COD orders (≈{months} months) using the current
    rules in <code>config/rules.yaml</code>. "Saved" counts RTOs prevented by holding, WhatsApp
    confirmation, and prepaid conversion; "lost" counts genuine orders that holding cancels.
    Assumptions (confirmation prevents 50% of would-be RTOs; 50% accept prepaid) are stated in the memo.
@@ -80,5 +84,5 @@ html = f"""<!doctype html><html><head><meta charset="utf-8">
 </div></body></html>"""
 
 out = os.path.join(ROOT, "dashboard", "index.html")
-open(out, "w", encoding="utf-8").write(html)
+open(out, "w").write(html)
 print("wrote", out)

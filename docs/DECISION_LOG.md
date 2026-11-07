@@ -40,3 +40,8 @@ A running list of the important choices, the alternatives I considered, and why 
 ### 9. Conservative money assumptions, stated openly
 - Confirmation prevents 50% of would-be RTOs; 50% of nudged customers accept prepaid.
 - **Why:** better to under-promise savings. Both live as constants and are easy to update once real outcomes arrive.
+
+### 10. Impact figures must carry an explicit time basis (correction)
+- **What was wrong:** an earlier version reported the net impact as "~₹43,000/month" by scaling the 2,017-order sample up to 3,000 orders as if the sample were one month. But the sample spans ~6 months (1 Apr – 30 Sep 2026), so that conflated a six-month total with a one-month framing — the rupee numbers did not reconcile.
+- **The fix:** `analysis/backtest.py` now derives `months_in_sample` from the data's own min/max dates and reports three reconciling figures: net over the sample (₹29,191), net per month (= net ÷ months ≈ ₹4,882), and net per 1,000 orders (≈ ₹14,472, which scales to any future volume). No single-month figure is ever implied from six months of data.
+- **Lesson:** every impact number must state the window of its input data, the window of its claim, and the conversion between them. The backtest that produces these numbers is now a saved, reproducible script in the repo rather than an inline calculation.
